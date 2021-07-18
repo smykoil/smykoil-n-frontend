@@ -3,7 +3,7 @@
     <office-article
       v-if="article.post.type === 'document'"
       :article="article"
-      src="https://smykova-n.ru/storage/dd.docx"
+      :src="article.post.file_src"
     />
     <office-article
       v-else-if="article.post.type === 'presentation'"
