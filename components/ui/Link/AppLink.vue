@@ -1,7 +1,7 @@
 <template>
   <nuxt-link v-if="!blank && !button"
              :class="dark ? darkClasses : lightClasses"
-             active-class="text-blue-800"
+             active-class="text-green-800"
              :to="to || '#'"><slot /></nuxt-link>
   <button v-else-if="button"
           @click="$emit('click')"
@@ -17,8 +17,8 @@
 export default {
   name: "AppLink",
   data: () => ({
-    darkClasses: 'text-blue-500 focus:text-blue-600 hover:text-blue-400',
-    lightClasses: 'text-blue-600 focus:text-blue-800 hover:text-blue-400',
+    darkClasses: 'text-green-500 focus:text-green-600 hover:text-green-400',
+    lightClasses: 'text-green-600 focus:text-green-800 hover:text-green-500',
   }),
   props: {
     dark: { type: Boolean, default: false },

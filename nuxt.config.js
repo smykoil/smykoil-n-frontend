@@ -16,6 +16,12 @@ export default {
     ]
   },
 
+  server: {
+    port: 3000, // default: 3000
+    host: '192.168.1.106', // default: localhost,
+    timing: false
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
@@ -50,7 +56,7 @@ export default {
             package: '@fortawesome/free-solid-svg-icons',
             icons: [
               'faCalendarWeek', 'faComment', 'faAt', 'faFileDownload', 'faCloudDownloadAlt',
-              'faEye', 'faTimes', 'faChevronLeft', 'faChevronRight'
+              'faEye', 'faTimes', 'faChevronLeft', 'faChevronRight', 'faBars'
             ],
           },
         ],
@@ -58,6 +64,11 @@ export default {
       },
     ],
   ],
+
+  loading: {
+    color: '#10b981',
+    height: '5px',
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -83,5 +94,5 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
 }

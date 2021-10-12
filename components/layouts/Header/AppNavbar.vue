@@ -1,6 +1,11 @@
 <template>
-  <header>
-    <app-container class="flex shadow-header items-center gap-8 -mt-6 bg-white p-4">
+  <header class="z-10 transition-all duration-150 hidden lg:block"
+          :class="dark ? 'text-white' : 'text-black bg-white shadow-lg'"
+  >
+    <app-container
+        class="flex items-center gap-8 justify-between transition-all duration-150"
+        :class="dark ? 'h-24' : 'h-16'"
+    >
       <slot />
     </app-container>
   </header>
@@ -10,6 +15,9 @@
 import AppContainer from "../Container/AppContainer";
 export default {
   name: "AppNavbar",
+  props: {
+    dark: {type: Boolean, default: false }
+  },
   components: {AppContainer},
 }
 </script>

@@ -17,7 +17,22 @@ module.exports = {
       grab: 'grab',
       'zoom-in': 'zoom-in',
     },
-    extend: {},
+    extend: {
+      colors: {
+        gray: {
+          50: '#FAFAFA',
+          100: '#F4F4F4',
+          200: '#E7E7E7',
+          300: '#D5D5D5',
+          400: '#A3A3A3',
+          500: '#727272',
+          600: '#555555',
+          700: '#414141',
+          800: '#1E1E1E',
+          900: '#181818',
+        }
+      }
+    },
   },
   variants: {
     extend: {
@@ -26,5 +41,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
   ],
 }

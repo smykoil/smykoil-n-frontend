@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-2">
-    <div class="flex-shrink-0 w-20">
-      <img class="rounded" src="~static/images/anon-user.png" alt="user">
+    <div class="flex-shrink-0 w-12">
+      <img class="rounded-full" src="~static/images/anon-user.png" alt="user">
     </div>
     <div class="flex-grow flex flex-col">
       <span class="font-bold">Jack Thursby</span>

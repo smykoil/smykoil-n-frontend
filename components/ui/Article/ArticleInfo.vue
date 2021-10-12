@@ -15,13 +15,17 @@
         color="green"
         :icon="['fa', 'file-download']">Скачать</app-button>
     </div>
-    <div class="mb-4">
+    <div v-if="applications.length !== 0" class="mb-4">
       <h1 class="font-serif font-bold text-3xl mb-3">Приложение</h1>
       <application class="mb-2">
-        <application-item class="mb-3" format="pdf">Документ #1.pdf</application-item>
-        <application-item class="mb-3" format="pptx">Документ #2.ppt</application-item>
-        <application-item class="mb-3" format="doc">Документ #3.doc</application-item>
-        <application-item class="mb-3" format="png">Документ #4.png</application-item>
+        <application-item v-for="(app, i) of applications"
+                          :key="i + 'application'"
+                          class="mb-3"
+                          :link="app.file_src"
+                          :download-link="app.file_src"
+                          :format="app.extension">
+          {{ app.title }}
+        </application-item>
       </application>
     </div>
   </div>
@@ -37,7 +41,8 @@ export default {
   props: {
     category: { type: Object, required: true },
     createdAt: { type: String, required: true },
-    info: { type: Array, default: null }
+    info: { type: Array, default: null },
+    applications: { type: Array, default: null }
   },
   components: {ApplicationItem, Application, AppButton, AppLink}
 }

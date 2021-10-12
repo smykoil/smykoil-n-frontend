@@ -19,7 +19,7 @@
     </app-navbar>
 
     <app-container class="pt-4">
-      <slot />
+      <nuxt />
     </app-container>
 
     <app-footer class="bg-gray-800 overflow-hidden mt-12 pt-12 text-white">
@@ -49,21 +49,21 @@
 </template>
 
 <script>
-import AppHeader from "./Header/AppHeader";
-import AppNavbar from "./Header/AppNavbar";
-import AppLogo from "./Header/AppLogo";
-import AppNav from "./Header/AppNav";
-import AppNavItem from "./Header/AppNavItem";
-import AppContainer from "./Container/AppContainer";
-import AppFooter from "./Footer/AppFooter";
-import AppLink from "../ui/Link/AppLink";
-import DeveloperBlock from "./Footer/DeveloperBlock";
-import FooterNav from "./Footer/FooterNav";
-import FooterNavItem from "./Footer/FooterNavItem";
-import EmailBlock from "./Footer/EmailBlock";
-import ArticleList from "../ui/Article/ArticleList";
-import ArticlePreview from "../ui/Article/ArticlePreview";
-import MobileNavbar from "./MobileNavbar";
+import AppHeader from "/components/layouts/Header/AppHeader";
+import AppNavbar from "/components/layouts/Header/AppNavbar";
+import AppLogo from "/components/layouts/Header/AppLogo";
+import AppNav from "/components/layouts/Header/AppNav";
+import AppNavItem from "/components/layouts/Header/AppNavItem";
+import AppContainer from "/components/layouts/Container/AppContainer";
+import AppFooter from "/components/layouts/Footer/AppFooter";
+import AppLink from "/components/ui/Link/AppLink";
+import DeveloperBlock from "/components/layouts/Footer/DeveloperBlock";
+import FooterNav from "/components/layouts/Footer/FooterNav";
+import FooterNavItem from "/components/layouts/Footer/FooterNavItem";
+import EmailBlock from "/components/layouts/Footer/EmailBlock";
+import ArticleList from "/components/ui/Article/ArticleList";
+import ArticlePreview from "/components/ui/Article/ArticlePreview";
+import MobileNavbar from "/components/layouts/MobileNavbar";
 export default {
   name: "AppLayout",
   data: () => ({
@@ -94,6 +94,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.pg-enter-active,
+.pg-leave-active {
+  transition: opacity 0.5s;
+}
+.pg-enter,
+.pg-leave-to {
+  opacity: 0;
+}
 
 </style>

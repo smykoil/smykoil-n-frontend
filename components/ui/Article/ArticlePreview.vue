@@ -1,16 +1,16 @@
 <template>
   <article class="flex gap-4">
     <div class="w-24 flex-shrink-0">
-      <nuxt-link :to="`/articles/${article.id}`" class="block bg-white overflow-hidden rounded-2xl">
-        <img src="~static/images/photo-not-found-dark-sm.png" :alt="article.title">
+      <nuxt-link :to="`/articles/${article.id}`" class="block overflow-hidden rounded-2xl">
+        <img :src="article.preview" :alt="article.title">
       </nuxt-link>
     </div>
     <div class="min-w-0">
       <div class="flex flex-col">
-        <app-link v-if="category || article.category"
+        <app-link v-if="!hideCategory"
                   :dark="dark" class="uppercase text-sm mb-2 leading-3"
-                  :to="`/categories/${category.id || article.category.id}`">
-          {{  category.title || article.category.title }}
+                  :to="`/categories/${article.category.id || ''}`">
+          {{ article.category.title || ''}}
         </app-link>
         <nuxt-link :to="`/articles/${article.id}`">
           <h1 class="font-bold whitespace-nowrap truncate mb-1">{{ article.title }}</h1>
@@ -28,11 +28,11 @@
 <script>
 import AppLink from "../Link/AppLink";
 export default {
-  name: "SmallCategorizable",
+  name: "ArticlePreview",
   components: {AppLink},
   props: {
     article: { type: Object, required: true },
-    category: { type: Object },
+    hideCategory: { type: Boolean, default: false },
     dark: { type: Boolean, default: false },
   }
 }

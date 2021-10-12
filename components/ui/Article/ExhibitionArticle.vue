@@ -9,49 +9,46 @@
         @close="index = null"
       />
 
-      <div class="grid gap-2 grid-cols-4 mb-2">
+      <div class="grid gap-2 grid-cols-4 mb-6">
         <img v-for="(image, imgIndex) in article.post.files.slice(0,12)"
              :key="imgIndex + 'img'"
              @click="index = imgIndex"
-             class="cursor-pointer"
+             class="cursor-pointer rounded-md"
              :class="{
                'hidden sm:block': imgIndex >= 4 && imgIndex < 6,
                'hidden lg:block': imgIndex >= 6 && imgIndex < 8,
                'hidden xl:block': imgIndex >= 8,
              }"
-             :src="image.url" alt="img">
+             :src="image.thumb_url" alt="img">
       </div>
 
-      <div>
-        {{ article.post.description }}
-      </div>
+      <markdown :markdown="article.post.description" />
+
       <comments-list>
-        <comment>
-          <comment />
-          <comment />
-        </comment>
-        <comment>
-          <comment />
-          <comment />
-          <comment />
+        <comment v-for="(item, iParent) of comments"
+                 :comment="item"
+                 :key="iParent + '-comment-parent'">
+          <comment v-for="(child, iChild) of item.children"
+                   :comment="child"
+                   :key="iChild + '-comment-child'"/>
         </comment>
       </comments-list>
     </div>
     <article-info :created-at="article.created_at"
                   :info="[`${article.post.files.length} изображений`]"
                   :category="category"
+                  :applications="article.applications"
                   class="flex-grow" />
   </div>
 </template>
 
 <script>
-import CoolLightBox from 'vue-cool-lightbox'
-import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
-
 import ArticleInfo from "./ArticleInfo";
 import CommentsList from "../Comments/CommentsList";
 import Comment from "../Comments/Comment";
 import LightBox from "../LightBox/LightBox";
+import Markdown from "../Markdown/Markdown";
+
 export default {
   name: "ExhibitionArticle",
   props: {
@@ -62,39 +59,19 @@ export default {
       link: '/category/1',
       title: 'Игртека'
     },
-    index: null
+    index: null,
   }),
   computed: {
-    imageBlockClasses() {
-      switch (this.items.length) {
-        case 1:
-          return 'grid-cols-1'
-        case 2:
-          return 'grid-cols-1 md:grid-cols-2'
-        case 3:
-          return 'grid-cols-1 md:grid-cols-3'
-        default:
-          return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-      }
-    },
-    imageClasses() {
-      switch (this.items.length) {
-        case 1:
-          return 'h-96 md:py-72 lg:py-96'
-        case 2:
-          return 'h-72'
-        default:
-          return 'h-48'
-      }
+    comments() {
+      return this.$store.getters['comments/list']
     }
   },
-  components: {LightBox, Comment, CommentsList, ArticleInfo, CoolLightBox},
+  components: {
+    Markdown,
+    LightBox, Comment, CommentsList, ArticleInfo,
+  },
 }
 </script>
 
-<style scoped>
-.columns-container {
-  column-width: 140px;
-  column-gap: 0.5rem;
-}
+<style>
 </style>

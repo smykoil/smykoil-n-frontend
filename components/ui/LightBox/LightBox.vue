@@ -1,9 +1,9 @@
 <template>
   <transition name="fade">
     <div v-if="index !== null && items !== null" @mousemove="doDrag"
-         class="fixed h-screen w-full top-0 left-0 bg-black bg-opacity-80 flex flex-col">
-      <div class="fixed top-0 left-0 w-screen h-screen z-0" @click="close"></div>
-      <div class="flex justify-between z-10 p-4">
+         class="fixed h-screen w-full top-0 left-0 bg-black bg-opacity-80 flex flex-col z-20">
+      <div class="fixed top-0 left-0 w-screen h-screen" @click="close"></div>
+      <div class="flex justify-between z-30 p-4">
         <div></div>
         <div>
           <button @click="close"
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="h-screen flex justify-between items-center">
-        <div class="items-center hidden md:flex z-10 p-4">
+        <div class="items-center hidden md:flex z-30 p-4">
           <button @click="previous"
                   class="bg-gray-800 h-10 w-10 text-white">
             <fa :icon="['fa', 'chevron-left']" />
@@ -28,7 +28,7 @@
                  :key="`${i}-slide`"
                  v-for="(item, i) of items">
               <div class="flex flex-col lg:w-8/12 ">
-                <img ref="img" class="mb-4 z-20"
+                <img ref="img" class="mb-4 z-30"
                      :class="{'transition-all duration-300': !dragging, 'cursor-grab': zoomed, 'cursor-zoom-in': !zoomed}"
                      :style="dragStyle"
                      @dblclick="zoom"
@@ -36,7 +36,7 @@
                      :src="item.url"
                      :alt="item.title">
                 <transition name="fade">
-                  <div v-if="!zoomed" class="flex justify-between z-10">
+                  <div v-if="!zoomed" class="flex justify-between z-30">
                     <div>
                       <h1 class="text-white mb-2">{{ item.title }} {{ i }} -- {{ `${x} ${y} ${offsetX} ${offsetY}` }}</h1>
                       <p class="text-gray-300">{{ item.description }}</p>
@@ -50,7 +50,7 @@
             </div>
           </transition>
         </div>
-        <div class="items-center hidden md:flex z-10 p-4">
+        <div class="items-center hidden md:flex z-30 p-4">
           <button @click="next"
                   class="bg-gray-800 h-10 w-10 text-white">
             <fa :icon="['fa', 'chevron-right']" />
@@ -98,14 +98,13 @@ export default {
     close() {
       this.$emit('close')
       this.deviation = 0
+      this.zoomed = false
+      this.x = this.y = 0
     },
     zoom() {
       this.zoomed = !this.zoomed
       if(this.zoomed === false) {
-        this.x = 0
-        this.y = 0
-        /*this.animate('x', 0)
-        this.animate('y', 0)*/
+        this.x = this.y = 0
       }
     },
     dragStart: function (e) {
@@ -124,35 +123,6 @@ export default {
         this.y = (event.clientY - (window.innerHeight / 2) + this.offsetY * 1.5) / 1.5
       }
     },
-    /*animate(x, y) {
-      let duration = 300
-      let next = px
-      let prev
-
-      if(axis === 'x'){
-        prev = this.x
-      }
-      if(axis === 'y'){
-        prev = this.y
-      }
-
-      let steps_count = Math.abs(next - prev)
-      const step = (next - prev) / steps_count
-      let interval = duration / steps_count
-
-      //console.log(prev)
-      if(prev !== null && next !== null) {
-        let int = setInterval(function() {
-          prev = prev + step
-          if(prev === next){
-            clearInterval(int)
-          }
-          console.log(prev)
-        }, interval);
-      }
-      console.log(this.x, this.y)
-
-    }*/
   },
   props: {
     items: { type: Array, default: null },

@@ -1,16 +1,18 @@
 <template>
   <div class="w-full flex">
-    <div class="w-12 h-12 flex items-center justify-center rounded-l"
-         :style="formats[format] || formats['null']">
-      {{ format || '?'}}
-    </div>
-    <div class="flex-grow h-12 flex items-center px-2">
+    <app-button
+      class="rounded-l-2xl px-4 w-12 text-xs h-12 font-bold"
+      blank rounded-none color="gray" size="self"
+      :to="'https://www.online-convert.com/ru/file-format/' + format">
+      {{ format }}
+    </app-button>
+    <div class="flex-grow h-12 bg-gray-100 flex items-center px-2">
       <slot />
     </div>
-    <app-button color="blue" size="self" class="w-12 h-12 flex-grow-0" rounded-none>
+    <app-button blank :to="link" color="gray" size="self" class="w-12 h-12 flex-grow-0 mr-px" rounded-none>
       <fa :icon="['fa', 'eye']" />
     </app-button>
-    <app-button color="green" size="self" class="w-12 h-12 rounded-l-none">
+    <app-button blank :to="downloadLink" color="gray" size="self" class="w-12 h-12 rounded-l-none">
       <fa :icon="['fa', 'cloud-download-alt']" />
     </app-button>
   </div>
@@ -26,7 +28,7 @@ export default {
     formats: {
       null: {
         backgroundColor: '#ababab',
-        color: '#fff'
+        color: '#1e1e1e'
       },
       ppt: {
         backgroundColor: '#C44423',
@@ -63,7 +65,9 @@ export default {
     }
   }),
   props: {
-    format: { type: String, default: 'doc'}
+    format: { type: String, default: 'doc'},
+    link: { type: String, required: true },
+    downloadLink: { type: String, required: true }
   }
 }
 </script>

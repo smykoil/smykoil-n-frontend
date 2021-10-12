@@ -7,7 +7,7 @@
                 class="w-full" style="height: 500px"></iframe>
       </div>
       <div class="mb-4">
-        {{ description }}
+        <markdown :markdown="article.post.description" />
       </div>
       <comments-list>
         <comment>
@@ -21,7 +21,12 @@
         </comment>
       </comments-list>
     </div>
-    <article-info :created-at="created_at" :category="category" class="flex-grow" />
+    <article-info
+      :created-at="created_at"
+      :category="category"
+      :applications="article.applications"
+      class="flex-grow"
+    />
   </div>
 </template>
 
@@ -33,6 +38,7 @@ import CommentsList from "../Comments/CommentsList";
 import Comment from "../Comments/Comment";
 import Application from "./Application";
 import ArticleInfo from "./ArticleInfo";
+import Markdown from "../Markdown/Markdown";
 export default {
   name: "OfficeArticle",
   data: () => ({
@@ -50,9 +56,10 @@ export default {
       title: 'Игртека'
     }
   }),
-  components: {ArticleInfo, Application, Comment, CommentsList, ApplicationItem, AppButton, AppLink},
+  components: {Markdown, ArticleInfo, Application, Comment, CommentsList, ApplicationItem, AppButton, AppLink},
   props: {
     src: { type: String, required: true },
+    article: { type: Object, required: true }
   }
 }
 </script>

@@ -15,8 +15,8 @@ export default {
 
 <style scoped>
 .bg-header {
-  background-image: url("https://smykova-n.ru/img/wall.jpg");
-  background-position: center center;
+  background-image: url("~static/images/home-bg.jpg");
+  background-position: top center;
   background-size: cover;
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="w-full md:w-8/12">
       <h1 class="font-bold font-serif text-3xl">Статья #{{ $route.params.id }}</h1>
       <div class="mb-4">
-        {{ article.post.content }}
+        <markdown :markdown="article.post.content" />
       </div>
       <comments-list>
         <comment>
@@ -18,13 +18,18 @@
         </comment>
       </comments-list>
     </div>
-    <article-info :created-at="created_at" :category="category" class="flex-grow" />
+    <article-info
+      :created-at="created_at"
+      :category="category"
+      :applications="article.applications"
+      class="flex-grow" />
   </div>
 </template>
 
 <script>
 import ArticleInfo from "./ArticleInfo";
 import CommentsList from "../Comments/CommentsList";
+import Markdown from "../Markdown/Markdown";
 export default {
   name: "SimpleArticle",
   data: () => ({
@@ -35,7 +40,7 @@ export default {
       title: 'Игртека'
     }
   }),
-  components: {CommentsList, ArticleInfo},
+  components: {Markdown, CommentsList, ArticleInfo},
   props: {
     article: { type: Object, required: true }
   }

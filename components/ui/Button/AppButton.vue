@@ -2,16 +2,23 @@
   <button v-if="!to"
           class="focus:ring-4 focus:ring-opacity-30 flex justify-center items-center"
           @click="$emit('click')"
-          :class="`${colors[color] || colors['blue']} ${sizes[size] || sizes['md']} ${roundedNone ? '' : 'rounded'}`">
+          :class="`${colors[color] || colors['blue']} ${sizes[size] || sizes['md']} ${roundedNone ? '' : 'rounded-2xl'}`">
     <fa :class="iconClasses" v-if="icon !== null" :icon="icon" /><slot />
   </button>
 
-  <nuxt-link v-else
+  <nuxt-link v-else-if="!blank"
              class="focus:ring-4 focus:ring-opacity-30 justify-center items-center"
-             :class="`${colors[color] || colors['blue']} ${sizes[size] || sizes['md']} ${roundedNone ? '' : 'rounded'} ${noFlex ? '' : 'inline-flex'}`"
+             :class="`${colors[color] || colors['blue']} ${sizes[size] || sizes['md']} ${roundedNone ? '' : 'rounded-2xl'} ${noFlex ? '' : 'inline-flex'}`"
              :to="to">
     <fa :class="iconClasses" v-if="icon !== null" :icon="icon" /><slot />
   </nuxt-link>
+
+  <a v-else :href="to"
+     target="_blank"
+     class="focus:ring-4 focus:ring-opacity-30 justify-center items-center"
+     :class="`${colors[color] || colors['blue']} ${sizes[size] || sizes['md']} ${roundedNone ? '' : 'rounded-2xl'} ${noFlex ? '' : 'inline-flex'}`">
+    <fa :class="iconClasses" v-if="icon !== null" :icon="icon" /><slot />
+  </a>
 </template>
 
 <script>
@@ -34,12 +41,13 @@ export default {
     },
   }),
   props: {
-    color: { type: String, default: 'blue' },
+    color: { type: String, default: 'green' },
     size: { type: String, default: 'md' },
     to: { type: String, default: null },
     icon: { type: Array, default: null },
     roundedNone: { type: Boolean, default: false },
-    noFlex: { type: Boolean, default: false }
+    noFlex: { type: Boolean, default: false },
+    blank: { type: Boolean, default: false }
   }
 }
 </script>

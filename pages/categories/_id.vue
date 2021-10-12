@@ -1,33 +1,30 @@
 <template>
-  <app-layout>
-<!--    <categorizable-list class="mt-4" :title="`Категория ${$route.params.id}`">
-      <categorizable v-for="i of 18" :key="i + 'ctz'" />
-    </categorizable-list>-->
-
-    <small-categorizable-list :title="category.title">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <small-categorizable
-          v-for="(article, i) of articles.list"
-          :category="category"
-          :key="i + 'ctz'"
-          :article="article"
-        />
-      </div>
-    </small-categorizable-list>
-  </app-layout>
+  <transition name="pg" mode="out-in">
+    <article-list v-if="articles.list && category.title" :title="category.title">
+      <article-preview
+        v-for="(article, i) of articles.list"
+        :category="category"
+        :key="i + 'ctz'"
+        :article="article"
+        hide-category
+      />
+    </article-list>
+    <div class="py-20 flex items-center justify-center" v-else>
+      <img src="~static/images/loading.svg" alt="Loading...">
+    </div>
+  </transition>
 </template>
 
 <script>
 import AppLayout from "../../components/layouts/AppLayout";
-import CategorizableList from "../../components/ui/Categorizable/CategorizableList";
-import Categorizable from "../../components/ui/Categorizable/Categorizable";
-import SmallCategorizableList from "../../components/ui/Categorizable/SmallCategorizableList";
-import SmallCategorizable from "../../components/ui/Categorizable/SmallCategorizable";
+import ArticlePreview from "../../components/ui/Article/ArticlePreview";
+import ArticleList from "../../components/ui/Article/ArticleList";
+
 export default {
   name: "CategoryShow",
-  async asyncData({store, params}) {
+  async fetch({store, params}) {
     await store.dispatch('category/fetchItem', params.id)
-    await store.dispatch('articles/fetchList', params.id)
+    await store.dispatch('articles/fetchList', {category_id: params.id})
   },
   computed: {
     category() {
@@ -37,7 +34,7 @@ export default {
       return this.$store.getters['articles/list']
     },
   },
-  components: {SmallCategorizable, SmallCategorizableList, Categorizable, CategorizableList, AppLayout}
+  components: {ArticleList, ArticlePreview, AppLayout}
 }
 </script>
 
