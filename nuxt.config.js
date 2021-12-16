@@ -18,16 +18,19 @@ export default {
 
   server: {
     port: 3000, // default: 3000
-    host: '192.168.1.106', // default: localhost,
+    //host: '192.168.1.106',  // local
+    host: 'localhost', // default
     timing: false
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/fonts.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/v-click-outside'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -44,25 +47,24 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    [
-      'qonfucius-nuxt-fontawesome', {
-        componentName: 'fa',
-        packs: [
-          {
-            package: '@fortawesome/free-brands-svg-icons',
-            icons: ['faGithub', 'faGitlab', 'faVk'],
-          },
-          {
-            package: '@fortawesome/free-solid-svg-icons',
-            icons: [
-              'faCalendarWeek', 'faComment', 'faAt', 'faFileDownload', 'faCloudDownloadAlt',
-              'faEye', 'faTimes', 'faChevronLeft', 'faChevronRight', 'faBars'
-            ],
-          },
-        ],
-        includeCss: true
-      },
-    ],
+    '@nuxtjs/auth-next',
+    ['qonfucius-nuxt-fontawesome', {
+      componentName: 'FaIcon',
+      packs: [
+        {
+          package: '@fortawesome/free-brands-svg-icons',
+          icons: ['faGithub', 'faGitlab', 'faVk', 'faOdnoklassniki', 'faGoogle'],
+        },
+        {
+          package: '@fortawesome/free-solid-svg-icons',
+          icons: [
+            'faCalendarWeek', 'faComment', 'faAt', 'faFileDownload', 'faCloudDownloadAlt',
+            'faEye', 'faTimes', 'faChevronLeft', 'faChevronRight', 'faBars'
+          ],
+        },
+      ],
+      includeCss: true
+    }],
   ],
 
   loading: {
@@ -72,23 +74,48 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // proxy: true,
+    credentials: true,
+    proxy: true,
+  },
+
+
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    },
+    strategies: {
+      local: {
+        cookie: {
+          name: 'XSRF-TOKEN',
+        },
+        endpoints: {
+          csrf: { url: `/sanctum/csrf-cookie` },
+          login: { url: `/auth/token` },
+          user: { url: `/api/user` }
+        }
+      }
+    }
   },
 
   proxy: {
     '/api': {
-      target: process.env.API_URL + '/api',
-      // changeOrigin: false,
-      pathRewrite: {
-        '^/api' : '/'
-      }
+      target: `${process.env.API_URL}/`,
+      changeOrigin: false
     },
     '/storage': {
-      target: process.env.API_URL + '/storage',
-      // changeOrigin: false,
-      pathRewrite: {
-        '^/storage' : '/'
-      }
+      target: `${process.env.API_URL}/`,
+      changeOrigin: false
+    },
+    '/sanctum': {
+      target: `${process.env.API_URL}/`,
+      changeOrigin: false
+    },
+    '/auth': {
+      target: `${process.env.API_URL}/`,
+      changeOrigin: false
     },
   },
 

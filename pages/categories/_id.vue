@@ -16,9 +16,8 @@
 </template>
 
 <script>
-import AppLayout from "../../components/layouts/AppLayout";
-import ArticlePreview from "../../components/ui/Article/ArticlePreview";
-import ArticleList from "../../components/ui/Article/ArticleList";
+import ArticlePreview from "../../components/ArticleListItem";
+import ArticleList from "../../components/ArticleList";
 
 export default {
   name: "CategoryShow",
@@ -34,10 +33,6 @@ export default {
       return this.$store.getters['articles/list']
     },
   },
-  components: {ArticleList, ArticlePreview, AppLayout}
+  components: {ArticleList, ArticlePreview}
 }
 </script>
-
-<style scoped>
-
-</style>

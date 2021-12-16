@@ -3,7 +3,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      'sans': ['Nunito', 'ui-sans-serif', 'system-ui'],
+      'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
       'serif': ['PT Serif', 'ui-serif', 'Georgia'],
     },
     cursor: {
@@ -36,7 +36,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      margin: ['last']
+      margin: ['last', 'first'],
+      border: ['focus'],
     },
   },
   plugins: [

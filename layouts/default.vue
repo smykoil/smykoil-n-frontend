@@ -13,8 +13,14 @@
       </app-nav>
 
       <app-nav class="ml-auto">
-        <app-nav-item to="/">Вход</app-nav-item>
-        <app-nav-item to="/">Регистрация</app-nav-item>
+        <template v-if="!$auth.loggedIn">
+          <app-nav-item to="/login">Вход</app-nav-item>
+          <app-nav-item to="/register">Регистрация</app-nav-item>
+        </template>
+        <template v-if="$auth.loggedIn">
+          <app-nav-item to="/profile">{{ $auth.user.first_name }}</app-nav-item>
+          <app-nav-item @click.prevent="$auth.logout()">Выход</app-nav-item>
+        </template>
       </app-nav>
     </app-navbar>
 
@@ -49,23 +55,23 @@
 </template>
 
 <script>
-import AppHeader from "/components/layouts/Header/AppHeader";
-import AppNavbar from "/components/layouts/Header/AppNavbar";
-import AppLogo from "/components/layouts/Header/AppLogo";
-import AppNav from "/components/layouts/Header/AppNav";
-import AppNavItem from "/components/layouts/Header/AppNavItem";
-import AppContainer from "/components/layouts/Container/AppContainer";
-import AppFooter from "/components/layouts/Footer/AppFooter";
-import AppLink from "/components/ui/Link/AppLink";
-import DeveloperBlock from "/components/layouts/Footer/DeveloperBlock";
-import FooterNav from "/components/layouts/Footer/FooterNav";
-import FooterNavItem from "/components/layouts/Footer/FooterNavItem";
-import EmailBlock from "/components/layouts/Footer/EmailBlock";
-import ArticleList from "/components/ui/Article/ArticleList";
-import ArticlePreview from "/components/ui/Article/ArticlePreview";
-import MobileNavbar from "/components/layouts/MobileNavbar";
+import AppHeader from "/components/TheHeader";
+import AppNavbar from "/components/TheHeaderNavbar";
+import AppLogo from "/components/TheHeaderLogo";
+import AppNav from "/components/TheHeaderNav";
+import AppNavItem from "/components/TheHeaderNavItem";
+import AppContainer from "/components/AppContainer";
+import AppFooter from "/components/TheFooter";
+import AppLink from "/components/AppLink";
+import DeveloperBlock from "/components/TheFooterDeveloperBlock";
+import FooterNav from "/components/TheFooterNav";
+import FooterNavItem from "/components/TheFooterNavItem";
+import EmailBlock from "/components/TheFooterEmailBlock";
+import ArticleList from "/components/ArticleList";
+import ArticlePreview from "/components/ArticleListItem";
+import MobileNavbar from "/components/TheHeaderMobileNavbar";
 export default {
-  name: "AppLayout",
+  name: "DefaultLayout",
   data: () => ({
     headerNav: [
       { to: '/categories/1', title: 'Игротека' },

@@ -1,8 +1,8 @@
 <template>
   <article-list class="mt-4" title="Последние публикации">
     <article-preview
-      v-for="(article, i) of articles.list"
-      :key="i + 'article-preview'"
+      v-for="article of articles.list"
+      :key="article.id"
       :article="article"
       hide-category
     />
@@ -10,22 +10,21 @@
 </template>
 
 <script>
-import AppLayout from "../components/layouts/AppLayout";
-import ArticleList from "../components/ui/Article/ArticleList";
-import ArticlePreview from "../components/ui/Article/ArticlePreview";
-import HomeLayout from "../components/layouts/HomeLayout";
+import ArticleList from "../components/ArticleList";
+import ArticlePreview from "../components/ArticleListItem";
+import {mapGetters} from "vuex";
 
 export default {
-  layout: 'home-layout',
+  layout: 'home',
   async fetch({store}) {
     await store.dispatch('articles/fetchList', {per_page: 4})
   },
   computed: {
-    articles() {
-      return this.$store.getters['articles/list']
-    }
+    ...mapGetters({
+      articles: 'articles/list'
+    })
   },
-  components: {HomeLayout, ArticlePreview, ArticleList, AppLayout}
+  components: {ArticlePreview, ArticleList}
 }
 </script>
 

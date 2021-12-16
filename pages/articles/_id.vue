@@ -1,28 +1,15 @@
 <template>
-  <office-article
-    v-if="article.post.type === 'document'"
+  <div
+    :is="componentName"
     :article="article"
-    :src="article.post.file_src"
-  />
-  <office-article
-    v-else-if="article.post.type === 'presentation'"
-    :article="article"
-    src="https://smykova-n.ru/storage/pp.pptx"
-  />
-  <simple-article
-    v-else-if="article.post.type === 'post'"
-    :article="article"/>
-  <exhibition-article
-    v-else-if="article.post.type === 'exhibition'"
-    :article="article"
-  />
+  ></div>
 </template>
 
 <script>
-import AppLayout from "../../components/layouts/AppLayout";
-import OfficeArticle from "../../components/ui/Article/OfficeArticle";
-import SimpleArticle from "../../components/ui/Article/SimpleArticle";
-import ExhibitionArticle from "../../components/ui/Article/ExhibitionArticle";
+import ArticleShowOffice from "../../components/ArticleShowOffice";
+import ArticleShowSimple from "../../components/ArticleShowSimple";
+import ArticleShowExhibition from "../../components/ArticleShowExhibition";
+import {mapGetters} from "vuex";
 
 export default {
   name: "ArticleShow",
@@ -34,14 +21,18 @@ export default {
     })
   },
   computed: {
-    article() {
-      return this.$store.getters['articles/current']
+    ...mapGetters({ article: 'articles/current' }),
+    componentName: function () {
+      let articleComponents = {
+        'document': 'ArticleShowOffice',
+        'presentation': 'ArticleShowOffice',
+        'post': 'ArticleShowSimple',
+        'exhibition': 'ArticleShowExhibition'
+      }
+
+      return articleComponents[this.article.post.type]
     }
   },
-  components: {ExhibitionArticle, SimpleArticle, OfficeArticle, AppLayout}
+  components: {ArticleShowOffice, ArticleShowSimple, ArticleShowExhibition}
 }
 </script>
-
-<style scoped>
-
-</style>
